@@ -25,3 +25,18 @@ file_put_contents("randomReply.json", $r_str);
 
 $k_str = json_encode($keywords_ary, JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT);
 file_put_contents("keywords.json", $k_str);
+
+$rand_ary = json_decode(file_get_contents("./randomReply.json"), true);
+        $sum = $rand_ary["sum"];
+        $rand = rand(0, $sum);
+        $k = 0;
+        $res = "";
+        foreach($rand_ary as $value){
+            $k += $value[1];
+            if($k >= $rand){
+                $res = $value[0];
+                break;
+            }
+        }
+
+        echo $res;

@@ -98,7 +98,7 @@ if(strpos($query, "@q") !== FALSE){
                 break;
             }
         }
-        $data[0] = $rand_ary[$res];
+        $data[0] = $res;
         echo json_encode($data, JSON_UNESCAPED_UNICODE);
     }
 }
