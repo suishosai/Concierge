@@ -11,7 +11,7 @@ $data = [];
 
 const TEMPLATE_FOR_SERACH_NUM = "お探しの情報は%d件見つかりました。";
 const TEMPLATE_FOR_NO_FOUND = "お探しの情報は見つかりませんでした。キーワードを変えるか、減らして再度お試しください";
-const TEMPLATE_FOR_INFO = "%s<br><br>%s<br><a href='%s'>リンクはこちら</a>";
+const TEMPLATE_FOR_INFO = "%s<br><br>%s<br><br><a href='%s'>リンクはこちら</a>";
 
 $query = (string) urldecode($_POST["query"]);
 $query = str_replace("\n", "", $query);
@@ -87,7 +87,17 @@ if(strpos($query, "@q") !== FALSE){
         echo json_encode($data, JSON_UNESCAPED_UNICODE); 
     }else{
         $rand_ary = json_decode(file_get_contents("./randomReply.json"), true);
-        $res = array_rand($rand_ary);
+        $sum = $rand_ary["sum"];
+        $rand = rand(0, $sum);
+        $k = 0;
+        $res = "";
+        foreach($rand_ary as $value){
+            $k += $value[1];
+            if($k >= $rand){
+                $res = $value[0];
+                break;
+            }
+        }
         $data[0] = $rand_ary[$res];
         echo json_encode($data, JSON_UNESCAPED_UNICODE);
     }
