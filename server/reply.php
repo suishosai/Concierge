@@ -11,6 +11,7 @@ $rand_ary = [
 $keywords_ary = [
     "うんち" => "うんち大好き！！",
     "Twitter" => "翠翔祭のTwitterは<a href='https://twitter.com/suishosai0123'>@suishosai123</a>なのです！",
+    "人生、宇宙、すべての答え" => "42"
 ];
 
 $r_str = json_encode($rand_ary, JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT);

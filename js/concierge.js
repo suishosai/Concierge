@@ -20,6 +20,7 @@ Settings.template = `
     </div>
     <div id="concierge-button">
         <img src="${Settings.concierge_img_url}">
+        <span>&nbsp;ご質問はこちらから&nbsp;</span>
     </div>`;
 
 const SPEAKER_CONCIERGE = 0;

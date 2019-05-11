@@ -63,6 +63,24 @@ if(strpos($query, "@q") !== FALSE){
     return;
 }else{
 
+    if($query === "gyoza"){
+        $data[0] = "The secret key was given";
+        echo json_encode($data, JSON_UNESCAPED_UNICODE);
+        return; 
+    }
+
+    if($query === "upsidedown"){
+        $data[0] = "Up Side Down";
+        echo json_encode($data, JSON_UNESCAPED_UNICODE);
+        return;
+    }
+
+    if($query === "starwars"){
+        $data[0] = "May the Force be with you";
+        echo json_encode($data, JSON_UNESCAPED_UNICODE);
+        return;
+    }
+
     $keywords = json_decode(file_get_contents("./keywords.json"), true);
     if(isset($keywords[$query])){
         $data[0] = $keywords[$query];

@@ -26,7 +26,9 @@ def main():
         header = next(reader)
 
         for row in reader:
-            o_id, o_composition, o_name, o_description, o_url = row
+            o_id, o_name, o_composition, o_description = row
+            o_url = "https://suishosai.netlify.com/org/"+o_id.replace("-", "").replace("定", "T")+".html"
+            print(o_url)
             s = o_composition + ":" + o_name + ":"
             res = [o_id, o_name, o_description]
             url = base_url + urllib.parse.quote(o_description)
