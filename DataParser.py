@@ -37,7 +37,7 @@ def main():
                 i += 1
                 o_id, o_name, o_composition, o_place, o_description = row
                 newfile = o_id.replace("-", "")+".html"
-                o_url = "https://suishosai.netlify.com/"+newfile
+                o_url = "https://suishosai.netlify.com/events/"+newfile
                 print(o_url)
                 s = o_composition + ":" + o_name + ":" + o_place + ":"
                 res = [o_id, o_name, o_description]
