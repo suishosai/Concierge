@@ -14,42 +14,58 @@ import urllib.request
 import urllib.parse
 import xml.etree.ElementTree as ET
 import csv
+import os
 
 
 def main():
     input_file = input_parse()
+
+    template = './template.html'
+    i = 0
     ary = []
     ary.append(["id","name","description","keywords","url"])
+    outputfolder = "./output/"
+    os.makedirs(outputfolder, exist_ok=True)
     base_url = "https://jlp.yahooapis.jp/MAService/V1/parse?appid=dj00aiZpPTN1U1QzQzh5aVNBUSZzPWNvbnN1bWVyc2VjcmV0Jng9MzA-&results=ma,uniq&uniq_filter=9%7C10&sentence="
-    with open(input_file, 'r') as f:
-        reader = csv.reader(f)
-        header = next(reader)
+    with open(template) as t:
+        d = t.read()
+        with open(input_file, 'r') as f:
+            reader = csv.reader(f)
+            header = next(reader)
 
-        for row in reader:
-            o_id, o_name, o_composition, o_description = row
-            o_url = "https://suishosai.netlify.com/org/"+o_id.replace("-", "").replace("定", "T")+".html"
-            print(o_url)
-            s = o_composition + ":" + o_name + ":"
-            res = [o_id, o_name, o_description]
-            url = base_url + urllib.parse.quote(o_description)
-            req = urllib.request.Request(url)
-            with urllib.request.urlopen(req) as response:
-                XmlData = response.read()
-                root = ET.fromstring(XmlData)
-                for child1 in root:
-                    if child1.tag == '{urn:yahoo:jp:jlp}uniq_result':
-                        for child2 in child1:
-                            if child2.tag == '{urn:yahoo:jp:jlp}word_list':
-                                for child3 in child2:
-                                    for child4 in child3:
-                                        if child4.tag == '{urn:yahoo:jp:jlp}surface':
-                                            s += child4.text + ":"
+            for row in reader:
+                i += 1
+                o_id, o_name, o_composition, o_place, o_description = row
+                newfile = o_id.replace("-", "")+".html"
+                o_url = "https://suishosai.netlify.com/"+newfile
+                print(o_url)
+                s = o_composition + ":" + o_name + ":" + o_place + ":"
+                res = [o_id, o_name, o_description]
+                url = base_url + urllib.parse.quote(o_description)
+                image_url = "https://suishosai.netlify.com/images/" + o_id.replace("-", "")+".png"
+                req = urllib.request.Request(url)
+                with urllib.request.urlopen(req) as response:
+                    XmlData = response.read()
+                    root = ET.fromstring(XmlData)
+                    for child1 in root:
+                        if child1.tag == '{urn:yahoo:jp:jlp}uniq_result':
+                            for child2 in child1:
+                                if child2.tag == '{urn:yahoo:jp:jlp}word_list':
+                                    for child3 in child2:
+                                        for child4 in child3:
+                                            if child4.tag == '{urn:yahoo:jp:jlp}surface':
+                                                s += child4.text + ":"
                 res.append(s[0:-1])
                 res.append(o_url)
                 ary.append(res)
+                with open(outputfolder+newfile, "w") as ff:
+                    newdata = d.replace("variable1", o_name).replace("variable2", o_composition).replace("variable3", o_place).replace("variable4", image_url).replace("variable5", o_description)
+                    ff.write(newdata)
     with open('output.csv', 'w') as f:
         writer = csv.writer(f, lineterminator='\n')
         writer.writerows(ary)
+    
+    print(i)
 
 
 def input_parse():
