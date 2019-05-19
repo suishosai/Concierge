@@ -19,7 +19,7 @@ $query = str_replace("\n", "", $query);
 if(strpos($query, "@q") !== FALSE){
     $query = str_replace("@q ", "@q", $query);
     $query = str_replace("@q", "", $query);
-    $query = str_replace(",", "[COMMA]");
+    $query = str_replace(",", "[COMMA]", $query);
 
     $keywords = explode(" ", $query);
 
@@ -51,7 +51,7 @@ if(strpos($query, "@q") !== FALSE){
     $data[0] = "";
     foreach($result_array as $key => $value){
         if($value === 0) break;
-        $data[$i + 1] = sprintf(TEMPLATE_FOR_INFO, $cache2[$key]["name"], $cache2[$key]["description"], $cache2[$key]["url"]);
+        $data[$i + 1] = sprintf(TEMPLATE_FOR_INFO, str_replace("[COMMA]", ",", $cache2[$key]["name"]), str_replace("[COMMA]", ",", $cache2[$key]["description"]), $cache2[$key]["url"]);
         $i++;
     }
     if($i === 0){
