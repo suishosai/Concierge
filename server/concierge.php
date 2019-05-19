@@ -19,6 +19,7 @@ $query = str_replace("\n", "", $query);
 if(strpos($query, "@q") !== FALSE){
     $query = str_replace("@q ", "@q", $query);
     $query = str_replace("@q", "", $query);
+    $query = str_replace(",", "[COMMA]");
 
     $keywords = explode(" ", $query);
 

@@ -59,7 +59,7 @@ def main():
                 res.append(o_url)
                 ary.append(res)
                 with open(outputfolder+newfile, "w") as ff:
-                    newdata = d.replace("variable1", o_name).replace("variable2", o_composition).replace("variable3", o_place).replace("variable4", image_url).replace("variable5", o_description)
+                    newdata = d.replace("variable1", o_name.replace("[COMMA]", ",")).replace("variable2", o_composition).replace("variable3", o_place).replace("variable4", image_url).replace("variable5", o_description)
                     ff.write(newdata)
     with open('output.csv', 'w') as f:
         writer = csv.writer(f, lineterminator='\n')
