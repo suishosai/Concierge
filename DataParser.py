@@ -42,7 +42,7 @@ def main():
                 s = o_composition + ":" + o_name + ":" + o_place + ":"
                 res = [o_id, o_name, o_description]
                 url = base_url + urllib.parse.quote(o_description)
-                image_url = "https://suishosai.netlify.com/images/" + o_id.replace("-", "")+".png"
+                image_url = "https://suishosai.netlify.com/images/big/"+o_id+".JPG"
                 req = urllib.request.Request(url)
                 with urllib.request.urlopen(req) as response:
                     XmlData = response.read()
